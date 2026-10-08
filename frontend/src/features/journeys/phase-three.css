@@ -1,0 +1,337 @@
+.view-switch {
+  display: flex;
+  gap: 6px;
+  margin: 24px 0;
+  scroll-margin-top: 20px;
+}
+.journey-map-panel {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.map-panel-heading {
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: center;
+}
+.map-panel-heading h2 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 28px;
+  margin: 5px 0 0;
+}
+.map-panel-heading label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.map-panel-heading select {
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  background: var(--background);
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 100%;
+}
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 24px 18px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.map-legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.map-legend i {
+  width: 24px;
+  height: 0;
+  background: transparent;
+  border-radius: 0;
+  border-top: 3px solid var(--map-coach);
+}
+.map-legend .rail-swatch {
+  border-color: var(--map-rail);
+  border-top-style: dashed;
+}
+.map-legend .shuttle-swatch {
+  border-color: var(--map-shuttle);
+  border-top-style: dotted;
+}
+.map-canvas {
+  height: 390px;
+  width: 100%;
+  background: var(--map-land);
+}
+.map-stop-marker {
+  color: var(--foreground);
+  background: var(--card);
+  padding: 7px 11px;
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  font:
+    600 12px 'DM Sans Variable',
+    sans-serif;
+  box-shadow: 0 2px 10px #0002;
+  cursor: pointer;
+}
+.map-stop-marker:focus-visible {
+  outline: 3px solid var(--foreground);
+  outline-offset: 3px;
+}
+.map-stop-summary {
+  padding: 20px 24px 8px;
+  font-size: 14px;
+}
+.map-stop-summary p {
+  margin: 6px 0;
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.map-text-stops {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 10px 24px;
+  margin: 0;
+  flex-wrap: wrap;
+}
+.map-text-stops button {
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+}
+.map-text-stops button[aria-pressed='true'] {
+  background: var(--secondary);
+  border-color: var(--primary);
+}
+.map-text-stops span {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  margin-top: 3px;
+}
+.map-caption {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.7;
+  margin: 8px 24px 22px;
+}
+.map-caption a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.map-error {
+  padding: 16px 24px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  background: var(--secondary);
+}
+.map-selected-card .journey-card {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.card-map-link {
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: auto;
+}
+.journey-card-bottom {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.journey-actions {
+  padding: 20px 0 4px;
+}
+.action-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.action-status {
+  min-height: 18px;
+  margin: 12px 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.share-fallback {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  margin-top: 12px;
+}
+.share-fallback input {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 10px;
+  border-radius: 7px;
+  background: var(--background);
+}
+.saved-page {
+  padding-block: 50px 80px;
+  min-height: 60vh;
+}
+.saved-page h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: 1.15;
+  margin: 15px 0;
+}
+.saved-page h1 em {
+  color: var(--primary);
+}
+.saved-intro {
+  max-width: 590px;
+  color: var(--muted-foreground);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+.saved-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.saved-card {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 16px;
+  padding: 26px;
+}
+.saved-card h2 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 26px;
+  margin: 14px 0 10px;
+}
+.saved-card p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+  margin-bottom: 14px;
+}
+.print-page {
+  max-width: 760px;
+  padding-block: 30px 70px;
+}
+.print-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 40px;
+  font-size: 14px;
+}
+.print-source {
+  margin-top: 30px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+@media (max-width: 600px) {
+  .map-panel-heading {
+    display: block;
+    padding: 20px;
+  }
+  .map-panel-heading label {
+    margin-top: 18px;
+  }
+  .map-canvas {
+    height: 310px;
+  }
+  .map-legend {
+    gap: 12px;
+    padding-inline: 20px;
+  }
+  .map-stop-summary,
+  .map-error {
+    padding-inline: 20px;
+  }
+  .map-text-stops {
+    padding-inline: 20px;
+  }
+  .map-caption {
+    margin-inline: 20px;
+  }
+  .saved-grid {
+    grid-template-columns: 1fr;
+  }
+  .saved-card {
+    padding: 20px;
+  }
+  .card-map-link {
+    margin-left: 0;
+  }
+  .journey-card-bottom .freshness {
+    width: 100%;
+  }
+  .print-toolbar {
+    flex-wrap: wrap;
+  }
+}
+@media print {
+  @page {
+    margin: 16mm;
+  }
+  :root,
+  .dark {
+    --background: #fff;
+    --foreground: #17291f;
+    --card: #fff;
+    --muted-foreground: #444;
+    --primary: #244732;
+    --border: #ccc;
+    --secondary: #f0f0f0;
+    color-scheme: light;
+  }
+  body {
+    background: white !important;
+    color: #17291f !important;
+  }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .no-print,
+  .provider-handoff {
+    display: none !important;
+  }
+  .print-page {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    font-size: 11pt;
+  }
+  .itinerary-stops li,
+  .itinerary-facts,
+  .sample-disclaimer,
+  .data-freshness {
+    break-inside: avoid;
+  }
+  .print-page .itinerary-title {
+    font-size: 28pt;
+  }
+  .print-page .itinerary-stops {
+    margin-block: 16px;
+  }
+  .print-page .stop-content {
+    padding-bottom: 18px;
+  }
+}

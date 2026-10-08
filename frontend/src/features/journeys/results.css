@@ -1,0 +1,759 @@
+.results-page {
+  padding-top: 30px;
+}
+.results-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  min-height: 40px;
+}
+.results-back:hover {
+  color: var(--foreground);
+}
+.results-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin: 28px 0 30px;
+}
+.results-intro h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(35px, 4.5vw, 58px);
+  line-height: 1.2;
+  letter-spacing: -1.7px;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.results-intro h1:focus {
+  outline: none;
+}
+.results-intro p {
+  color: var(--muted-foreground);
+  font-size: 13px;
+  margin-top: 13px;
+}
+.results-intro p span {
+  margin-inline: 7px;
+}
+.results-intro > .button {
+  flex-shrink: 0;
+}
+.edit-search-panel {
+  margin-bottom: 26px;
+}
+.compact-search .search-heading {
+  display: none;
+}
+.compact-search .search-note {
+  display: none;
+}
+.results-sample-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.results-sample-note svg {
+  margin-top: 2px;
+}
+.results-sample-note strong {
+  font-weight: 600;
+}
+.results-workspace {
+  display: grid;
+  grid-template-columns: 216px minmax(0, 1fr);
+  gap: 42px;
+  margin-top: 32px;
+}
+.journey-filters {
+  border-right: 1px solid var(--border);
+  padding-right: 27px;
+}
+.filter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 10px 0 27px;
+}
+.filter-heading h2 {
+  font-size: 14px;
+  font-weight: 550;
+}
+.journey-filters > label {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  margin-bottom: 22px;
+}
+.journey-filters select,
+.results-toolbar select {
+  display: block;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 100%;
+  padding: 11px 8px;
+  margin-top: 8px;
+  font-size: 13px;
+  min-height: 44px;
+}
+.filter-hint {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-top: -8px;
+  margin-bottom: 15px;
+}
+.reset-filters {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  padding: 8px 0;
+  min-height: 40px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.direct-note {
+  border-top: 1px solid var(--border);
+  margin-top: 28px;
+  padding-top: 25px;
+  color: var(--muted-foreground);
+}
+.direct-note svg {
+  color: var(--primary);
+}
+.direct-note h3 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--foreground);
+  margin: 15px 0 12px;
+}
+.direct-note p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+.results-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  min-height: 50px;
+  margin-bottom: 20px;
+}
+.results-toolbar > p {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.results-toolbar > p strong {
+  font-weight: 550;
+  color: var(--foreground);
+}
+.results-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.results-toolbar select {
+  margin: 0;
+  width: auto;
+  background: transparent;
+  padding: 9px 7px;
+}
+.journey-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 17px;
+}
+.journey-card {
+  padding: 23px 25px 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+.journey-card-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.provider-symbol {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--secondary);
+  color: var(--primary);
+}
+.provider-symbol.rail {
+  color: var(--map-rail);
+}
+.provider-symbol.shuttle {
+  color: var(--map-shuttle);
+}
+.provider-name h3 {
+  font-size: 14px;
+  font-weight: 550;
+}
+.provider-name > span {
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+.journey-badge {
+  margin-left: auto;
+  font-size: 10px;
+  border: 1px solid var(--border);
+  padding: 4px 9px;
+  border-radius: 20px;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.journey-card-main {
+  display: grid;
+  grid-template-columns: 1fr minmax(95px, 1.15fr) 1fr 1.1fr;
+  align-items: center;
+  gap: 22px;
+  margin: 27px 0;
+}
+.journey-end strong {
+  display: block;
+  font-size: 27px;
+  font-weight: 450;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+.journey-end > span {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+.journey-duration {
+  text-align: center;
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+.journey-duration > span:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+}
+.route-rule {
+  position: relative;
+  height: 1px;
+  background: var(--border);
+  margin: 11px 0 10px;
+}
+.route-rule i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary);
+  position: absolute;
+  top: -2px;
+}
+.route-rule i:first-child {
+  left: 0;
+}
+.route-rule i:last-child {
+  right: 0;
+}
+.journey-fare {
+  text-align: right;
+  border-left: 1px solid var(--border);
+  padding-left: 18px;
+}
+.journey-fare strong {
+  font-size: 29px;
+  font-weight: 450;
+  letter-spacing: -1px;
+  display: block;
+}
+.journey-fare > span {
+  display: block;
+  font-size: 10px;
+  color: var(--muted-foreground);
+}
+.journey-fare.unknown-fare strong {
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.journey-fare.unknown-fare > span {
+  margin-top: 7px;
+}
+.journey-card-bottom {
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 14px;
+}
+.freshness {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+.stale {
+  color: var(--foreground);
+}
+.results-footnote {
+  color: var(--muted-foreground);
+  font-size: 11px;
+  padding-block: 18px;
+}
+.result-message {
+  text-align: center;
+  padding: 65px 30px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--card);
+}
+.result-message > svg {
+  margin: 0 auto 22px;
+  color: var(--primary);
+}
+.result-message h2 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 29px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+.result-message p {
+  max-width: 360px;
+  margin: 16px auto 25px;
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+.loading-journeys {
+  display: grid;
+  gap: 17px;
+}
+.journey-skeleton {
+  min-height: 245px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 27px;
+}
+.journey-skeleton span {
+  display: block;
+  height: 25px;
+  margin-bottom: 27px;
+  background: var(--secondary);
+  border-radius: 5px;
+}
+.journey-skeleton span:first-child {
+  width: 40%;
+}
+.journey-skeleton span:nth-child(2) {
+  height: 47px;
+}
+.journey-skeleton span:last-child {
+  width: 70%;
+}
+.itinerary-dialog {
+  width: min(620px, calc(100% - 32px));
+  padding: 35px;
+}
+.itinerary-title {
+  font-size: 35px;
+}
+.sample-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  background: var(--secondary);
+  border-radius: 9px;
+  padding: 12px 14px;
+  margin-top: 20px;
+  color: var(--secondary-foreground);
+  font-size: 12px;
+}
+.sample-disclaimer svg {
+  margin-top: 2px;
+}
+.itinerary-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.25fr;
+  margin: 23px 0 27px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid var(--border);
+  gap: 15px;
+}
+.itinerary-facts dt {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  margin-bottom: 6px;
+}
+.itinerary-facts dd {
+  margin: 0;
+  font-size: 15px;
+}
+.itinerary-facts small {
+  font-size: 10px;
+  display: block;
+  color: var(--muted-foreground);
+}
+.stops-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 23px;
+}
+.stops-heading :is(h2, h3) {
+  font-size: 16px;
+  font-weight: 550;
+}
+.stops-heading > span {
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+.itinerary-stops {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.itinerary-stops li {
+  display: grid;
+  grid-template-columns: 45px 14px minmax(0, 1fr);
+  gap: 15px;
+}
+.stop-time {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  padding-top: 17px;
+}
+.stop-line {
+  position: relative;
+}
+.stop-line::after {
+  content: '';
+  width: 1px;
+  background: var(--border);
+  position: absolute;
+  left: 5px;
+  top: 26px;
+  bottom: -25px;
+}
+.itinerary-stops li:last-child .stop-line::after {
+  display: none;
+}
+.stop-line i {
+  position: relative;
+  top: 24px;
+  z-index: 1;
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  background: var(--card);
+}
+.stop-line i.last-stop {
+  background: var(--primary);
+}
+.stop-content {
+  padding-bottom: 27px;
+}
+.stop-kind {
+  color: var(--muted-foreground);
+  font-size: 10px;
+}
+.stop-content :is(h3, h4) {
+  font-size: 14px;
+  font-weight: 550;
+  margin: 2px 0 7px;
+}
+.stop-content p {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.stop-content p.stop-note {
+  display: block;
+  margin-top: 6px;
+}
+.stop-content p.stop-dwell {
+  margin-top: 8px;
+  color: var(--primary);
+}
+.data-freshness {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.data-freshness svg {
+  margin-top: 3px;
+}
+.data-freshness strong {
+  font-weight: 500;
+}
+.data-freshness.outdated strong {
+  color: var(--foreground);
+}
+.provider-handoff {
+  background: var(--secondary);
+  border-radius: 11px;
+  padding: 19px;
+  margin-top: 20px;
+}
+.provider-handoff :is(h2, h3) {
+  font-size: 15px;
+  font-weight: 550;
+}
+.provider-handoff p {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  margin: 8px 0 17px;
+}
+.provider-handoff .button {
+  width: 100%;
+  white-space: normal;
+}
+@media (max-width: 1100px) {
+  .results-workspace {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 25px;
+  }
+  .journey-filters {
+    padding-right: 20px;
+  }
+  .journey-card {
+    padding-inline: 20px;
+  }
+  .journey-card-main {
+    gap: 13px;
+  }
+  .journey-fare {
+    padding-left: 10px;
+  }
+}
+@media (max-width: 800px) {
+  .results-workspace {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .journey-filters {
+    border-right: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+  }
+  .filter-heading {
+    grid-column: 1/-1;
+    margin: 0;
+  }
+  .journey-filters > label {
+    margin: 0;
+  }
+  .direct-note {
+    display: none;
+  }
+  .filter-hint {
+    grid-column: 1/-1;
+    margin: 0;
+  }
+  .reset-filters {
+    grid-column: 1/-1;
+    width: fit-content;
+  }
+  .results-intro {
+    align-items: flex-start;
+  }
+  .results-intro h1 {
+    gap: 12px;
+  }
+  .results-intro h1 svg {
+    width: 23px;
+  }
+  .results-intro > .button {
+    padding: 10px 13px;
+  }
+}
+@media (max-width: 600px) {
+  .results-page {
+    padding-top: 17px;
+  }
+  .results-intro {
+    flex-wrap: wrap;
+    margin-top: 18px;
+    gap: 19px;
+  }
+  .results-intro h1 {
+    font-size: 35px;
+    gap: 12px;
+    letter-spacing: -1px;
+  }
+  .results-intro p {
+    font-size: 11px;
+    line-height: 1.8;
+  }
+  .results-intro p span {
+    margin-inline: 3px;
+  }
+  .results-intro > .button {
+    min-height: 42px;
+  }
+  .results-sample-note {
+    padding: 12px;
+    font-size: 11px;
+  }
+  .journey-filters {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .filter-heading {
+    margin-bottom: 2px;
+  }
+  .journey-filters > label {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+  .journey-filters select {
+    margin: 0;
+    font-size: 16px;
+  }
+  .results-toolbar {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .results-toolbar label {
+    margin-left: auto;
+  }
+  .results-toolbar select {
+    max-width: 160px;
+    font-size: 13px;
+  }
+  .journey-card {
+    padding: 17px 17px 0;
+  }
+  .journey-card-top {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .provider-name h3 {
+    font-size: 13px;
+  }
+  .provider-name > span {
+    font-size: 10px;
+  }
+  .provider-symbol {
+    width: 33px;
+    height: 33px;
+  }
+  .journey-badge {
+    font-size: 9px;
+    padding: 3px 7px;
+  }
+  .journey-card-main {
+    grid-template-columns: 1fr minmax(80px, 1fr) 1fr;
+    gap: 10px;
+    margin: 20px 0 15px;
+  }
+  .journey-end strong {
+    font-size: 26px;
+  }
+  .journey-end:nth-child(3) {
+    text-align: right;
+  }
+  .journey-fare {
+    grid-column: 1/-1;
+    text-align: left;
+    border-left: 0;
+    padding: 15px 0 0;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+  }
+  .journey-fare strong {
+    font-size: 25px;
+  }
+  .journey-fare.unknown-fare > span {
+    margin: 0;
+  }
+  .journey-card-bottom {
+    flex-wrap: wrap;
+    gap: 13px;
+  }
+  .journey-card-bottom .button {
+    width: 100%;
+  }
+  .freshness {
+    font-size: 10px;
+  }
+  .result-message {
+    padding: 40px 20px;
+  }
+  .result-message h2 {
+    font-size: 26px;
+  }
+  .itinerary-dialog {
+    padding: 30px 21px 22px;
+  }
+  .itinerary-title {
+    font-size: 29px;
+  }
+  .itinerary-facts {
+    gap: 10px;
+  }
+  .itinerary-facts dd {
+    font-size: 13px;
+  }
+  .itinerary-stops li {
+    gap: 9px;
+    grid-template-columns: 40px 12px minmax(0, 1fr);
+  }
+  .stop-time {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .journey-skeleton span {
+    animation: breathe 1.6s ease-in-out infinite alternate;
+  }
+  @keyframes breathe {
+    from {
+      opacity: 0.45;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
