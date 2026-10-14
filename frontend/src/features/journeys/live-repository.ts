@@ -1,8 +1,7 @@
 import { getPublicClient } from '@/lib/supabase'
 import { safeProviderUrl } from './format'
-import type { Journey, JourneyRepository } from './types'
+import type { Journey, JourneyRepository, JourneyStop } from './types'
 
-/** Proposed API contract; must be reconciled with the team's schema before activation. */
 export type JourneyRow = {
   id: string
   provider_name: string
@@ -24,6 +23,36 @@ export type JourneyRow = {
 }
 export const journeyColumns =
   'id,provider_name,mode,origin,destination,departure_at,arrival_at,time_zone,fare_cad,stops,provider_url,published,route_geometry,verified_at,updated_at,source_kind,manual_override'
+
+type TripCandidate = {
+  trip_id: string | number
+  provider: string | number
+  city_name: string
+  tripid_count: number
+}
+type StopTimeRow = {
+  ID: number
+  Provider: number
+  trip_id: string
+  arrival_time: string | null
+  departure_time: string | null
+  stop_id: number
+  stop_sequence: number
+  shape_dist_traveled: string | null
+}
+type StopRow = {
+  provider: number
+  stop_id: number
+  stop_name: string | null
+  stop_lon: number | null
+  stop_lat: number | null
+  city_name: string | null
+}
+type ProviderRow = {
+  id: number
+  Provider_name: string | null
+  link: string | null
+}
 const text = (x: unknown): x is string =>
   typeof x === 'string' && x.trim().length > 0 && x.length <= 500
 const timestamp = (x: unknown): x is string =>
@@ -128,27 +157,181 @@ export function mapJourney(row: JourneyRow): Journey {
     geometry: row.route_geometry ?? undefined,
   }
 }
+
+const gtfsTime = /^(\d+):([0-5]\d):([0-5]\d)$/
+function dateAfterDays(date: string, days: number) {
+  const value = new Date(`${date}T12:00:00Z`)
+  value.setUTCDate(value.getUTCDate() + days)
+  return value.toISOString().slice(0, 10)
+}
+function gtfsTimestamp(date: string, value: string) {
+  const match = gtfsTime.exec(value)
+  if (!match) throw new Error('Live schedule contains an invalid time.')
+  const hours = Number(match[1])
+  const dateWithOverflow = dateAfterDays(date, Math.floor(hours / 24))
+  const clock = `${String(hours % 24).padStart(2, '0')}:${match[2]}:${match[3]}`
+  const offset = new Intl.DateTimeFormat('en', {
+    timeZone: 'America/Toronto',
+    timeZoneName: 'longOffset',
+  })
+    .formatToParts(new Date(`${dateWithOverflow}T12:00:00Z`))
+    .find((part) => part.type === 'timeZoneName')!
+    .value.replace('GMT', '')
+  return new Date(`${dateWithOverflow}T${clock}${offset}`).toISOString()
+}
+function gtfsMinutes(value: string) {
+  const match = gtfsTime.exec(value)
+  if (!match) throw new Error('Live schedule contains an invalid time.')
+  return Number(match[1]) * 60 + Number(match[2])
+}
+function providerMode(name: string): Journey['mode'] {
+  return /rail|via/i.test(name) ? 'rail' : 'coach'
+}
+function providerUrl(link: string | null) {
+  return safeProviderUrl(link)
+}
+
+async function searchRawTrips(criteria: Parameters<JourneyRepository['search']>[0], signal?: AbortSignal) {
+  const client = getPublicClient()
+  const candidateRequest = client.rpc('find_trips_between_cities', {
+    city1: criteria.origin,
+    city2: criteria.destination,
+  })
+  const { data: candidates, error: candidateError } = await (
+    signal ? candidateRequest.abortSignal(signal) : candidateRequest
+  )
+  if (candidateError) throw new Error('Live journeys couldn’t be loaded. Please try again shortly.')
+  if (!Array.isArray(candidates)) throw new Error('Unexpected trip search response.')
+
+  const trips = new Map<string, { provider: number; tripId: string }>()
+  for (const candidate of candidates as TripCandidate[]) {
+    const provider = Number(candidate?.provider)
+    const tripId = String(candidate?.trip_id ?? '')
+    if (
+      Number.isInteger(provider) &&
+      tripId.length > 0 &&
+      Number(candidate?.tripid_count) > 1 &&
+      (candidate.city_name === criteria.origin || candidate.city_name === criteria.destination)
+    )
+      trips.set(`${provider}:${tripId}`, { provider, tripId })
+  }
+  if (!trips.size) return []
+
+  const tripValues = [...trips.values()]
+  const timesRequest = client
+    .from('stop_times')
+    .select('ID,Provider,trip_id,arrival_time,departure_time,stop_id,stop_sequence,shape_dist_traveled')
+    .in('Provider', [...new Set(tripValues.map((trip) => trip.provider))])
+    .in('trip_id', [...new Set(tripValues.map((trip) => trip.tripId))])
+    .order('stop_sequence', { ascending: true })
+  const { data: times, error: timesError } = await (
+    signal ? timesRequest.abortSignal(signal) : timesRequest
+  )
+  if (timesError) throw new Error('Live stop times couldn’t be loaded. Please try again shortly.')
+  if (!Array.isArray(times)) throw new Error('Unexpected stop-time response.')
+
+  const rows = times as StopTimeRow[]
+  const stopIds = [...new Set(rows.map((row) => row.stop_id).filter(Number.isInteger))]
+  const stopsRequest = client
+    .from('Stops')
+    .select('provider,stop_id,stop_name,stop_lon,stop_lat,city_name')
+    .in('provider', [...new Set(rows.map((row) => row.Provider))])
+    .in('stop_id', stopIds)
+  const providersRequest = client
+    .from('Providers')
+    .select('id,Provider_name,link')
+    .in('id', [...new Set(rows.map((row) => row.Provider))])
+  const [stopsResult, providersResult] = await Promise.all([
+    signal ? stopsRequest.abortSignal(signal) : stopsRequest,
+    signal ? providersRequest.abortSignal(signal) : providersRequest,
+  ])
+  if (stopsResult.error || providersResult.error)
+    throw new Error('Live stop metadata couldn’t be loaded. Please try again shortly.')
+  const stops = (stopsResult.data ?? []) as StopRow[]
+  const providers = new Map(
+    ((providersResult.data ?? []) as ProviderRow[]).map((provider) => [provider.id, provider]),
+  )
+  const stopByKey = new Map(stops.map((stop) => [`${stop.provider}:${stop.stop_id}`, stop]))
+  const grouped = new Map<string, StopTimeRow[]>()
+  for (const row of rows) {
+    const key = `${row.Provider}:${row.trip_id}`
+    const group = grouped.get(key) ?? []
+    group.push(row)
+    grouped.set(key, group)
+  }
+
+  return [...grouped.entries()]
+    .flatMap(([key, group]) => {
+      const first = group[0]
+      const last = group[group.length - 1]
+      const provider = providers.get(first.Provider)
+      const originStop = stopByKey.get(`${first.Provider}:${first.stop_id}`)
+      const destinationStop = stopByKey.get(`${last.Provider}:${last.stop_id}`)
+      if (
+        !provider?.Provider_name ||
+        !originStop?.city_name ||
+        !destinationStop?.city_name ||
+        originStop.city_name !== criteria.origin ||
+        destinationStop.city_name !== criteria.destination ||
+        !first.departure_time ||
+        !last.arrival_time
+      )
+        return []
+      const departureAt = gtfsTimestamp(criteria.date, first.departure_time)
+      const arrivalAt = gtfsTimestamp(criteria.date, last.arrival_time)
+      if (gtfsMinutes(first.departure_time) < gtfsMinutes(`${criteria.time}:00`))
+        return []
+      const journeyStops = group
+        .sort((a, b) => a.stop_sequence - b.stop_sequence)
+        .map((row): JourneyStop => {
+          const stop = stopByKey.get(`${row.Provider}:${row.stop_id}`)
+          if (!stop?.stop_name || !stop.city_name || !row.arrival_time || !row.departure_time)
+            throw new Error('Live stop data is incomplete.')
+          return {
+            name: stop.stop_name,
+            city: stop.city_name,
+            locationNote: 'Confirm the exact boarding location with the provider.',
+            arrivalTime: gtfsTimestamp(criteria.date, row.arrival_time),
+            departureTime: gtfsTimestamp(criteria.date, row.departure_time),
+            ...(Number.isFinite(stop.stop_lat) && Number.isFinite(stop.stop_lon)
+              ? { latitude: stop.stop_lat!, longitude: stop.stop_lon! }
+              : {}),
+          }
+        })
+      if (Date.parse(arrivalAt) <= Date.parse(departureAt) || journeyStops.length < 2) return []
+      return [
+        {
+          id: `${key}:${criteria.date}`,
+          providerName: provider.Provider_name,
+          mode: providerMode(provider.Provider_name),
+          origin: criteria.origin,
+          destination: criteria.destination,
+          departureAt,
+          arrivalAt,
+          durationMinutes: Math.round((Date.parse(arrivalAt) - Date.parse(departureAt)) / 60000),
+          transfers: 0,
+          estimatedFare: null,
+          stops: journeyStops,
+          providerUrl: providerUrl(provider.link),
+          isSample: false,
+          timeZone: 'America/Toronto',
+          updatedAt: new Date().toISOString(),
+        } satisfies Journey,
+      ]
+    })
+    .sort((a, b) => Date.parse(a.departureAt) - Date.parse(b.departureAt))
+}
+
 export const liveRepository: JourneyRepository = {
   async search(criteria, signal) {
-    const request = getPublicClient().rpc('search_moveon_journeys', {
-      p_origin: criteria.origin,
-      p_destination: criteria.destination,
-      p_date: criteria.date,
-      p_time: criteria.time,
-    })
-    const { data, error } = await (signal ? request.abortSignal(signal) : request)
-    if (error) throw new Error('Live journeys couldn’t be loaded. Please try again shortly.')
-    if (!Array.isArray(data)) throw new Error('Unexpected journey response.')
-    // Fail closed if a misconfigured API returns drafts.
-    return (data as JourneyRow[]).filter((x) => x?.published === true).map(mapJourney)
+    return searchRawTrips(criteria, signal)
   },
 }
 export async function loadLiveCities(signal?: AbortSignal) {
-  const request = getPublicClient().rpc('moveon_cities')
+  const request = getPublicClient().from('Stops').select('city_name').not('city_name', 'is', null)
   const { data, error } = await (signal ? request.abortSignal(signal) : request)
   if (error || !Array.isArray(data)) throw new Error('Available cities couldn’t be loaded.')
-  return data
-    .map((x: { city: string }) => x.city)
-    .filter(text)
-    .sort((a, b) => a.localeCompare(b))
+  return [...new Set(data.map((x: { city_name: string | null }) => x.city_name).filter(text))].sort(
+    (a, b) => a.localeCompare(b),
+  )
 }
