@@ -58,17 +58,21 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
               <MapPin size={14} aria-hidden="true" /> From
             </span>
             <span className="select-wrap">
-              <select
+              <input
                 aria-label="Starting city"
+                type="text"
                 value={criteria.origin}
                 onChange={(event) => update('origin', event.target.value)}
-              >
-                {cityOptions.map((city) => (
-                  <option key={city}>{city}</option>
-                ))}
-              </select>
+                list="starting-city-options"
+                placeholder="Search cities"
+              />
               <ChevronDown size={15} aria-hidden="true" />
             </span>
+            <datalist id="starting-city-options">
+              {cityOptions.map((city) => (
+                <option key={city} value={city} />
+              ))}
+            </datalist>
           </label>
           <button
             type="button"
@@ -90,17 +94,21 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
               <MapPin size={14} aria-hidden="true" /> To
             </span>
             <span className="select-wrap">
-              <select
+              <input
                 aria-label="Destination city"
+                type="text"
                 value={criteria.destination}
                 onChange={(event) => update('destination', event.target.value)}
-              >
-                {cityOptions.map((city) => (
-                  <option key={city}>{city}</option>
-                ))}
-              </select>
+                list="destination-city-options"
+                placeholder="Search cities"
+              />
               <ChevronDown size={15} aria-hidden="true" />
             </span>
+            <datalist id="destination-city-options">
+              {cityOptions.map((city) => (
+                <option key={city} value={city} />
+              ))}
+            </datalist>
           </label>
         </div>
         <label className="search-field date-field">
