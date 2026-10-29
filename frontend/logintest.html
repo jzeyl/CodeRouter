@@ -14,6 +14,8 @@
 
   <button id="loginBtn">Login</button>
   <button id="checkBtn">Who Am I?</button>
+<button id="updateBtn">Test Update</button>
+<button id="refreshBtn">Test Refresh</button>
 
   <pre id="output"></pre>
 
@@ -54,6 +56,65 @@
         ? JSON.stringify(user, null, 2)
         : "Not logged in";
     };
+
+
+  document.getElementById("updateBtn").onclick = async () => {
+const { data: userData } = await supabase.auth.getUser();
+
+const { data: adminRow } = await supabase
+  .from("admins")
+  .select("*")
+  .eq("user_id", userData.user.id);
+
+//console.log(adminRow);
+
+
+
+
+
+//check admin credentials
+const { data1, error1 } = await supabase
+  .from("admins")
+  .select("*")
+  .eq("user_id", userData.user.id);
+console.log(data1, error1);
+
+console.log(userData.user.id);
+const {
+  data: { user }
+} = await supabase.auth.getUser();
+
+console.log(user.id);
+
+  const { data, error } = await supabase
+    .from("stop_times")     // use a table you know exists
+    .update({
+     arrival_time: "2024-06-10 12:00:00",
+    })
+    .eq("ID", 1)
+
+
+  console.log(data, error);
+  output.textContent = JSON.stringify(
+    { data, error },
+    null,
+    2
+  );
+};
+
+document.getElementById("refreshBtn").onclick = async () => {
+  const { data, error } = await supabase
+    .from("stop_times")     // use a table you know exists
+    .select("*")
+    .limit(5)
+  console.log(data, error);
+  output.textContent = JSON.stringify(
+    { data, error },
+    null,
+    2
+  );
+};
+
   </script>
 </body>
 </html>
