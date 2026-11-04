@@ -68,7 +68,12 @@ const { data: adminRow } = await supabase
 
 //console.log(adminRow);
 
+const { data: adminRows, error: adminError } = await supabase
+  .from("admins")
+  .select("*")
+  .eq("user_id", userData.user.id);
 
+console.log("adminrows" + JSON.stringify({ adminRows, adminError }));
 
 
 
@@ -89,13 +94,14 @@ console.log(user.id);
   const { data, error } = await supabase
     .from("stop_times")     // use a table you know exists
     .update({
-     arrival_time: "2024-06-10 12:00:00",
+     arrival_time: "2024-06-10 12:01:00",
     })
     .eq("ID", 1)
+    .select("*")
 
 
   console.log(data, error);
-  output.textContent = JSON.stringify(
+  output.textContent =  "update in database" + JSON.stringify(
     { data, error },
     null,
     2
@@ -105,10 +111,11 @@ console.log(user.id);
 document.getElementById("refreshBtn").onclick = async () => {
   const { data, error } = await supabase
     .from("stop_times")     // use a table you know exists
-    .select("*")
-    .limit(5)
+        .select("*")
+    .eq("ID", 1)
+
   console.log(data, error);
-  output.textContent = JSON.stringify(
+  output.textContent =  "select from database" + JSON.stringify(
     { data, error },
     null,
     2
