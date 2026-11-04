@@ -93,11 +93,7 @@ export default function AdminPage() {
       </Link>
       <div className="admin-intro">
         <div>
-          <div className="eyebrow">MoveON · Service desk</div>
-          <h1>
-            A clear view of <em>every journey.</em>
-          </h1>
-          <p>Keep service information accurate, current and ready for travellers.</p>
+          <h1>MoveON Admin Portal</h1>
         </div>
         <ShieldCheck size={42} strokeWidth={1.2} aria-hidden="true" />
       </div>
@@ -121,11 +117,9 @@ export default function AdminPage() {
         </section>
       ) : !identity.data ? (
         <section className="admin-login">
-          <div className="eyebrow">For authorised administrators</div>
-          <h2>Welcome back.</h2>
+          <h2>Welcome</h2>
           <p>
-            Sign in with your approved MoveON account. Travellers can use the app without an
-            account.
+            Sign in with your administrator credentials
           </p>
           <form onSubmit={signIn}>
             <label>
@@ -152,9 +146,6 @@ export default function AdminPage() {
               {busy ? 'Signing in…' : 'Sign in'}
             </Button>
           </form>
-          <p className="admin-hint">
-            Need an account or password reset? Contact your project administrator.
-          </p>
         </section>
       ) : !identity.data.allowed ? (
         <section className="admin-login">
