@@ -1,22 +1,18 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useId, useState, type FormEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  ArrowLeft,
-  LogOut,
-  Plus,
-  ShieldCheck,
-  RefreshCw,
-  FileText,
-  CircleCheck,
-} from 'lucide-react'
+import { ArrowLeft, LogOut, ShieldCheck, RefreshCw, FileText, CircleCheck } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { getAdminClient } from '@/lib/supabase'
 import { isLiveData } from '@/lib/data-source'
-import { type JourneyRow } from '@/features/journeys/live-repository'
-import { loadAdminIdentity, listAdminJourneys } from './repository'
-import { JourneyEditor } from './editor'
+import { loadLiveCities } from '@/features/journeys/live-repository'
+import {
+  gtfsTimePattern,
+  listAdminTrips,
+  loadAdminIdentity,
+  updateStopTime,
+  type TripStop,
+} from './repository'
 import './admin.css'
 
 export default function AdminPage() {
@@ -174,14 +170,19 @@ export default function AdminPage() {
   )
 }
 function AdminWorkspace() {
-  const client = useQueryClient()
-  const [page, setPage] = useState(0)
-  const [status, setStatus] = useState('all')
-  const [editor, setEditor] = useState<JourneyRow | 'new' | null>(null)
-  const [message, setMessage] = useState('')
-  const query = useQuery({
-    queryKey: ['admin', 'journeys', page, status],
-    queryFn: ({ signal }) => listAdminJourneys(page, status, signal),
+  const [origin, setOrigin] = useState('')
+  const [destination, setDestination] = useState('')
+  const cities = useQuery({
+    queryKey: ['admin', 'cities'],
+    queryFn: ({ signal }) => loadLiveCities(signal),
+    staleTime: 60_000,
+  })
+  const known = (city: string) => !!cities.data?.includes(city)
+  const ready = known(origin) && known(destination) && origin !== destination
+  const trips = useQuery({
+    queryKey: ['admin', 'trips', origin, destination],
+    queryFn: ({ signal }) => listAdminTrips(origin, destination, signal),
+    enabled: ready,
     retry: 1,
     staleTime: 0,
   })
@@ -208,158 +209,176 @@ function AdminWorkspace() {
         <div className="admin-toolbar">
           <div>
             <div className="eyebrow">Service inventory</div>
-            <h2 id="inventory-title">Journeys</h2>
+            <h2 id="inventory-title">Trips</h2>
           </div>
-          <Button
-            onClick={() => {
-              setEditor('new')
-              setMessage('')
-            }}
-          >
-            <Plus size={16} aria-hidden="true" />
-            Create journey
-          </Button>
-        </div>
-        <div className="admin-list-tools">
-          <label>
-            Show
-            <select
-              value={status}
-              onChange={(e) => {
-                setStatus(e.target.value)
-                setPage(0)
-              }}
+          {ready && (
+            <Button
+              variant="ghost"
+              size="sm"
+              disabled={trips.isFetching}
+              onClick={() => trips.refetch()}
             >
-              <option value="all">All journeys</option>
-              <option value="draft">Drafts</option>
-              <option value="published">Published</option>
-            </select>
-          </label>
-          <Button
-            variant="ghost"
-            size="sm"
-            disabled={query.isFetching}
-            onClick={() => query.refetch()}
-          >
-            <RefreshCw size={14} aria-hidden="true" />
-            Refresh list
-          </Button>
+              <RefreshCw size={14} aria-hidden="true" />
+              Refresh list
+            </Button>
+          )}
         </div>
-        <p role="status" className="admin-hint">
-          {message ||
-            (query.isFetching
-              ? 'Refreshing journeys…'
-              : `${query.data?.count ?? 0} journeys in this view`)}
-        </p>
-        {query.isError ? (
+        {cities.isError && (
           <div className="admin-error" role="alert">
-            <p>{query.error.message}</p>
-            <Button variant="secondary" onClick={() => query.refetch()}>
+            <p>{cities.error.message}</p>
+            <Button variant="secondary" onClick={() => cities.refetch()}>
               Try again
             </Button>
           </div>
-        ) : query.isPending ? (
-          <p role="status">
-            Loading service inventory…{query.fetchStatus === 'paused' && ' Reconnect to continue.'}
+        )}
+        <div className="admin-fields">
+          <CitySelect label="Starting city" value={origin} onChange={setOrigin} cities={cities.data} />
+          <CitySelect
+            label="Destination city"
+            value={destination}
+            onChange={setDestination}
+            cities={cities.data}
+          />
+        </div>
+        {!ready ? (
+          <p className="admin-hint">
+            Type or pick two different cities from the list to see the trips between them.
           </p>
-        ) : !query.data.rows.length ? (
+        ) : trips.isError ? (
+          <div className="admin-error" role="alert">
+            <p>{trips.error.message}</p>
+            <Button variant="secondary" onClick={() => trips.refetch()}>
+              Try again
+            </Button>
+          </div>
+        ) : trips.isPending ? (
+          <p role="status">Loading trips…</p>
+        ) : !trips.data.length ? (
           <div className="admin-empty">
             <FileText size={30} aria-hidden="true" />
-            <h3>A place for your next service.</h3>
-            <p>
-              {status === 'all'
-                ? 'Create your first journey as a draft, then verify it before publishing.'
-                : 'No journeys match this view.'}
-            </p>
+            <h3>No trips found.</h3>
+            <p>No trip stops in both {origin} and {destination}.</p>
           </div>
         ) : (
-          <ul className="admin-journeys">
-            {query.data.rows.map((row) => (
-              <li key={row.id}>
-                <div>
-                  <span className={`admin-badge ${row.published ? 'published' : ''}`}>
-                    {row.published ? 'Published' : 'Draft'}
-                  </span>
-                  <h3>
-                    {row.origin} → {row.destination}
-                  </h3>
-                  <p>
-                    {row.provider_name} ·{' '}
-                    {new Date(row.departure_at).toLocaleString('en-CA', {
-                      timeZone: row.time_zone,
-                    })}{' '}
-                    Eastern
-                  </p>
-                  <p className="admin-hint">
-                    {row.manual_override
-                      ? 'Manual override · protected from imports'
-                      : row.source_kind === 'import'
-                        ? 'Imported service'
-                        : 'Manually managed'}{' '}
-                    ·{' '}
-                    {row.verified_at
-                      ? `Verified ${new Date(row.verified_at).toLocaleDateString('en-CA')}`
-                      : 'Not verified'}
-                  </p>
-                </div>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => {
-                    setEditor(row)
-                    setMessage('')
-                  }}
-                  aria-label={`Edit ${row.provider_name} journey`}
-                >
-                  Edit journey
-                </Button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {(query.data?.count ?? 0) > 20 && (
-          <div className="admin-pagination">
-            <Button variant="secondary" disabled={page === 0} onClick={() => setPage((p) => p - 1)}>
-              Previous
-            </Button>
-            <span>Page {page + 1}</span>
-            <Button
-              variant="secondary"
-              disabled={(page + 1) * 20 >= (query.data?.count ?? 0)}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              Next
-            </Button>
-          </div>
+          <>
+            <p role="status" className="admin-hint">
+              {trips.data.length} trips stop in both cities
+            </p>
+            <ul className="admin-trips">
+              {trips.data.map((trip) => {
+                const first = trip.stops[0]
+                const last = trip.stops[trip.stops.length - 1]
+                return (
+                  <li key={trip.key}>
+                    <details>
+                      <summary>
+                        <strong>
+                          {first?.city_name ?? first?.stop_name} → {last?.city_name ?? last?.stop_name}
+                        </strong>{' '}
+                        · {trip.providerName} · trip {trip.tripId} · departs{' '}
+                        {first?.departure_time ?? '—'} · {trip.stops.length} stops
+                      </summary>
+                      <ul>
+                        {trip.stops.map((stop) => (
+                          <li key={stop.ID}>
+                            <details>
+                              <summary>
+                                {stop.stop_sequence}. {stop.stop_name}
+                                {stop.city_name && ` · ${stop.city_name}`} · arrives{' '}
+                                {stop.arrival_time ?? '—'} · departs {stop.departure_time ?? '—'}
+                              </summary>
+                              <StopTimeForm stop={stop} />
+                            </details>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
         )}
       </section>
-      <Dialog
-        open={editor !== null}
-        onOpenChange={(open) => {
-          if (!open) setEditor(null)
-        }}
-      >
-        <DialogContent
-          className="admin-editor-dialog"
-          onInteractOutside={(e) => e.preventDefault()}
-        >
-          {editor && (
-            <JourneyEditor
-              key={editor === 'new' ? 'new' : editor.id}
-              journey={editor === 'new' ? undefined : editor}
-              onCancel={() => setEditor(null)}
-              onSaved={() => {
-                setEditor(null)
-                setMessage('Journey saved.')
-                void client.invalidateQueries({ queryKey: ['admin', 'journeys'] })
-                void client.invalidateQueries({ queryKey: ['journeys'] })
-                void client.invalidateQueries({ queryKey: ['cities'] })
-                void client.invalidateQueries({ queryKey: ['saved-journey'] })
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </>
+  )
+}
+function CitySelect(props: {
+  label: string
+  value: string
+  onChange: (city: string) => void
+  cities?: string[]
+}) {
+  const listId = useId()
+  return (
+    <label>
+      {props.label}
+      <input
+        list={listId}
+        autoComplete="off"
+        placeholder={props.cities ? 'Start typing a city' : 'Loading cities…'}
+        value={props.value}
+        onChange={(e) => props.onChange(e.target.value)}
+      />
+      <datalist id={listId}>
+        {props.cities?.map((city) => (
+          <option key={city} value={city} />
+        ))}
+      </datalist>
+    </label>
+  )
+}
+function StopTimeForm({ stop }: { stop: TripStop }) {
+  const queryClient = useQueryClient()
+  const [arrival, setArrival] = useState(stop.arrival_time ?? '')
+  const [departure, setDeparture] = useState(stop.departure_time ?? '')
+  const [busy, setBusy] = useState(false)
+  const [message, setMessage] = useState('')
+  const save = async (event: FormEvent) => {
+    event.preventDefault()
+    setBusy(true)
+    setMessage('')
+    try {
+      await updateStopTime(stop.ID, arrival.trim(), departure.trim())
+      setMessage('Saved.')
+      void queryClient.invalidateQueries({ queryKey: ['admin', 'trips'] })
+      void queryClient.invalidateQueries({ queryKey: ['journeys'] })
+    } catch (error) {
+      setMessage((error as Error).message)
+    } finally {
+      setBusy(false)
+    }
+  }
+  return (
+    <form className="admin-stop-form" onSubmit={save}>
+      <label>
+        Arrival time
+        <input
+          required
+          pattern={gtfsTimePattern}
+          title="HH:MM:SS, for example 08:05:00"
+          value={arrival}
+          onChange={(e) => setArrival(e.target.value)}
+        />
+      </label>
+      <label>
+        Departure time
+        <input
+          required
+          pattern={gtfsTimePattern}
+          title="HH:MM:SS, for example 08:05:00"
+          value={departure}
+          onChange={(e) => setDeparture(e.target.value)}
+        />
+      </label>
+      <Button type="submit" size="sm" disabled={busy}>
+        {busy ? 'Saving…' : 'Save times'}
+      </Button>
+      {message && (
+        <p role="status" className="admin-hint">
+          {message}
+        </p>
+      )}
+    </form>
   )
 }

@@ -244,6 +244,42 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+.admin-trips,
+.admin-trips ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+.admin-trips > li {
+  border-top: 1px solid var(--border);
+  padding: 16px 0;
+}
+.admin-trips summary {
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.admin-trips ul {
+  margin-left: 18px;
+}
+.admin-trips ul li {
+  border-top: 1px solid var(--border);
+  padding: 8px 0;
+}
+.admin-trips ul summary {
+  font-size: 13px;
+}
+.admin-stop-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin: 12px 0;
+}
+.admin-stop-form label {
+  flex: 1 1 140px;
+}
 @media (max-width: 600px) {
   .admin-intro > svg {
     display: none;
