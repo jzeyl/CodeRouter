@@ -32,14 +32,13 @@ export async function loadAdminIdentity() {
   if (error || !user)
     throw new Error('Your session could not be verified. Sign out and sign in again.')
   const membership = await client
-    .from('moveon_admins')
+    .from('admins')
     .select('user_id')
     .eq('user_id', user.id)
-    .eq('enabled', true)
     .maybeSingle()
   if (membership.error)
     throw new Error(
-      'Admin access could not be checked. The MoveON database setup or connection needs attention.',
+      'Admin access could not be checked. The admins table or connection needs attention.',
     )
   return { id: user.id, email: user.email, allowed: !!membership.data }
 }
