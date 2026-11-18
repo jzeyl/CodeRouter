@@ -1,0 +1,41 @@
+provider_id,origin_city,destination_city,price,source,checked_on
+2,Black River-Matheson Township,Cochrane,26.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Black River-Matheson Township,North Bay,72.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Black River-Matheson Township,Timmins,20.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Cochrane,Black River-Matheson Township,26.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Cochrane,Moosonee,65.00,user (Ontario Northland Cochrane to Moosonee),2026-11-18
+2,Cochrane,Timmins,24.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Greater Sudbury,North Bay,34.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Greater Sudbury,Ottawa,90.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Greater Sudbury,Sault Ste. Marie,68.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Greater Sudbury,Timmins,68.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Greater Sudbury,Toronto,83.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Hearst,Timmins,57.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Moosonee,Cochrane,65.00,user (Ontario Northland Moosonee to Cochrane),2026-11-18
+2,North Bay,Black River-Matheson Township,72.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,North Bay,Greater Sudbury,34.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,North Bay,Timmins,82.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,North Bay,Toronto,79.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Ottawa,Greater Sudbury,94.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Sault Ste. Marie,Greater Sudbury,68.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Sault Ste. Marie,Thunder Bay,123.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Thunder Bay,Sault Ste. Marie,123.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Thunder Bay,Winnipeg,121.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Timmins,Black River-Matheson Township,20.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Timmins,Cochrane,24.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Timmins,Greater Sudbury,68.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Timmins,Hearst,57.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Timmins,North Bay,82.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Timmins,Toronto,129.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Toronto,Greater Sudbury,83.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Toronto,North Bay,76.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Toronto,Timmins,127.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+2,Winnipeg,Thunder Bay,121.00,"tickets.ontarionorthland.ca lowest pre-tax fare, travel date 2026-12-02",2026-11-18
+3,Detroit,London,127.96,user (RobertQ Detroit to London),2026-11-18
+3,London,Detroit,127.96,user (RobertQ London to Detroit),2026-11-18
+3,London,Toronto,90.29,user (RobertQ London to Toronto),2026-11-18
+3,London,Windsor,90.29,user (RobertQ London to Windsor),2026-11-18
+3,Toronto,London,90.29,user (RobertQ Toronto to London),2026-11-18
+3,Windsor,London,90.29,user (RobertQ Windsor to London),2026-11-18
+4,London,Sarnia,20.00,user (Middlesex Route 4 London to Sarnia),2026-11-18
+4,Sarnia,London,20.00,user (Middlesex Route 4 Sarnia to London),2026-11-18

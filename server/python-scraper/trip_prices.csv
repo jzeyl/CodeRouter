@@ -1,0 +1,235 @@
+trip_id,provider_id,origin_city,destination_city,price,source
+1,4,London,Lucan,5.00,middlesex.ca flat fare
+10,4,London,Dorchester,5.00,middlesex.ca flat fare
+101:11110:30036,2,Toronto,North Bay,,missing from fare_table.csv
+101:11110:30040,2,Toronto,North Bay,,missing from fare_table.csv
+101:11310:30001,2,Toronto,North Bay,,missing from fare_table.csv
+101:11310:30024,2,Toronto,North Bay,,missing from fare_table.csv
+101:11312:27400,2,North Bay,North Bay,,missing from fare_table.csv
+101:11830:30025,2,Toronto,North Bay,,missing from fare_table.csv
+101:11990:30089,2,Toronto,North Bay,,missing from fare_table.csv
+102:11220:30033,2,North Bay,Toronto,,missing from fare_table.csv
+102:11220:30043,2,North Bay,Toronto,,missing from fare_table.csv
+102:11380:30008,2,North Bay,Toronto,,missing from fare_table.csv
+102:11420:30013,2,North Bay,Toronto,,missing from fare_table.csv
+102:11420:30029,2,North Bay,Toronto,,missing from fare_table.csv
+102:11900:30019,2,North Bay,Toronto,,missing from fare_table.csv
+11,4,Dorchester,London,5.00,middlesex.ca flat fare
+111,1,Toronto,Vancouver,,"dynamic pricing, not stored"
+112,1,Vancouver,Toronto,,"dynamic pricing, not stored"
+12,4,London,Woodstock,5.00,middlesex.ca flat fare
+13,4,Woodstock,London,5.00,middlesex.ca flat fare
+14,4,London,Woodstock,5.00,middlesex.ca flat fare
+15,4,Dorchester,St. Thomas,5.00,middlesex.ca flat fare
+16,4,St. Thomas,Dorchester,5.00,middlesex.ca flat fare
+17,4,Dorchester,St. Thomas,5.00,middlesex.ca flat fare
+18,4,St. Thomas,Dorchester,5.00,middlesex.ca flat fare
+19,4,Dorchester,St. Thomas,5.00,middlesex.ca flat fare
+2,4,Lucan,London,5.00,middlesex.ca flat fare
+20,4,St. Thomas,Dorchester,5.00,middlesex.ca flat fare
+201:12190:30002,2,Toronto,Greater Sudbury,,missing from fare_table.csv
+201:12230:29998,2,Toronto,Greater Sudbury,,missing from fare_table.csv
+201:12490:30028,2,Toronto,Greater Sudbury,,missing from fare_table.csv
+201:12490:30041,2,Toronto,Greater Sudbury,,missing from fare_table.csv
+202:12160:30044,2,Greater Sudbury,Toronto,,missing from fare_table.csv
+202:12320:30010,2,Greater Sudbury,Toronto,,missing from fare_table.csv
+202:12320:30031,2,Greater Sudbury,Toronto,,missing from fare_table.csv
+202:12340:29999,2,Greater Sudbury,Toronto,,missing from fare_table.csv
+21,4,Dorchester,St. Thomas,5.00,middlesex.ca flat fare
+22,4,St. Thomas,Dorchester,5.00,middlesex.ca flat fare
+23,4,Sarnia,London,,missing from fare_table.csv
+24,4,London,Sarnia,,missing from fare_table.csv
+25,4,Sarnia,London,,missing from fare_table.csv
+26,4,London,Sarnia,,missing from fare_table.csv
+269,1,Greater Sudbury,White River Township,,"dynamic pricing, not stored"
+27,4,Sarnia,London,,missing from fare_table.csv
+270,1,White River Township,Greater Sudbury,,"dynamic pricing, not stored"
+278,1,Churchill,The Pas,,"dynamic pricing, not stored"
+279,1,The Pas,Churchill,,"dynamic pricing, not stored"
+28,4,London,Sarnia,,missing from fare_table.csv
+29,3,Toronto,London,90.26,already set in database
+3,4,London,Lucan,5.00,middlesex.ca flat fare
+30,3,London,Toronto,139.81,fare_table.csv
+301:13010:27714,2,Black River-Matheson Township,Timmins,,missing from fare_table.csv
+301:13050:27370,2,Black River-Matheson Township,Cochrane,,missing from fare_table.csv
+301:13070:28658,2,North Bay,Black River-Matheson Township,,missing from fare_table.csv
+301:13070:28670,2,North Bay,Black River-Matheson Township,,missing from fare_table.csv
+301:13070:28673,2,North Bay,Black River-Matheson Township,,missing from fare_table.csv
+301:13210:27402,2,Black River-Matheson Township,Timmins,,missing from fare_table.csv
+301:13430:27405,2,Timmins,Cochrane,,missing from fare_table.csv
+302:13040:28655,2,Timmins,North Bay,,missing from fare_table.csv
+302:13040:28660,2,Timmins,North Bay,,missing from fare_table.csv
+302:13040:28661,2,Timmins,North Bay,,missing from fare_table.csv
+302:13060:27422,2,Cochrane,Black River-Matheson Township,,missing from fare_table.csv
+302:13220:27727,2,Timmins,Black River-Matheson Township,,missing from fare_table.csv
+302:13420:28129,2,Cochrane,Timmins,,missing from fare_table.csv
+31,3,Toronto,London,90.26,already set in database
+32,3,London,Toronto,139.81,fare_table.csv
+33,3,Toronto,London,90.26,already set in database
+34,3,London,Toronto,139.81,fare_table.csv
+35,3,Toronto,London,90.26,already set in database
+36,3,London,Toronto,139.81,fare_table.csv
+37,3,Toronto,London,90.26,already set in database
+371,1,Toronto,London,,"dynamic pricing, not stored"
+38,3,London,Toronto,139.81,fare_table.csv
+39,3,Toronto,London,90.26,already set in database
+396,1,Senneterre (ville),Montréal,,"dynamic pricing, not stored"
+397,1,Senneterre (ville),Montréal,,"dynamic pricing, not stored"
+4,4,Lucan,London,5.00,middlesex.ca flat fare
+40,3,London,Toronto,139.81,fare_table.csv
+401:14010:27412,2,Timmins,Hearst,,missing from fare_table.csv
+401:14110:27371,2,Greater Sudbury,Timmins,,missing from fare_table.csv
+401:14110:27407,2,Greater Sudbury,Timmins,,missing from fare_table.csv
+402:14040:24554,2,Hearst,Timmins,,missing from fare_table.csv
+402:14120:27353,2,Timmins,Greater Sudbury,,missing from fare_table.csv
+402:14120:27710,2,Timmins,Greater Sudbury,,missing from fare_table.csv
+402:14120:27756,2,Timmins,Greater Sudbury,,missing from fare_table.csv
+41,3,Toronto,London,90.26,already set in database
+42,3,London,Toronto,139.81,fare_table.csv
+43,3,Toronto,London,90.26,already set in database
+433,1,Montréal,Québec,,"dynamic pricing, not stored"
+434,1,Ottawa,Québec,,"dynamic pricing, not stored"
+44,3,London,Toronto,139.81,fare_table.csv
+442,1,Québec,Ottawa,,"dynamic pricing, not stored"
+443,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+449,1,Toronto,Montréal,,"dynamic pricing, not stored"
+45,3,Toronto,London,90.26,already set in database
+450,1,Toronto,Montréal,,"dynamic pricing, not stored"
+451,1,Toronto,Montréal,,"dynamic pricing, not stored"
+452,1,Toronto,Montréal,,"dynamic pricing, not stored"
+453,1,Montréal,Toronto,,"dynamic pricing, not stored"
+454,1,Montréal,Toronto,,"dynamic pricing, not stored"
+455,1,Montréal,Toronto,,"dynamic pricing, not stored"
+456,1,Montréal,Toronto,,"dynamic pricing, not stored"
+458,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+459,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+46,3,London,Toronto,139.81,fare_table.csv
+460,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+461,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+462,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+463,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+466,1,Québec,Montréal,,"dynamic pricing, not stored"
+467,1,Montréal,Québec,,"dynamic pricing, not stored"
+47,3,London,Detroit,,missing from fare_table.csv
+470,1,Ottawa,Montréal,,"dynamic pricing, not stored"
+472,1,Montréal,Toronto,,"dynamic pricing, not stored"
+473,1,Montréal,Toronto,,"dynamic pricing, not stored"
+475,1,Toronto,Montréal,,"dynamic pricing, not stored"
+476,1,Toronto,Montréal,,"dynamic pricing, not stored"
+477,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+478,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+479,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+48,3,Detroit,London,,missing from fare_table.csv
+481,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+482,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+484,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+485,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+486,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+487,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+488,1,Toronto,Windsor,,"dynamic pricing, not stored"
+489,1,Toronto,Windsor,,"dynamic pricing, not stored"
+49,3,London,Detroit,,missing from fare_table.csv
+490,1,Toronto,Windsor,,"dynamic pricing, not stored"
+492,1,Windsor,Toronto,,"dynamic pricing, not stored"
+495,1,Windsor,Toronto,,"dynamic pricing, not stored"
+496,1,Windsor,Toronto,,"dynamic pricing, not stored"
+497,1,Windsor,Toronto,,"dynamic pricing, not stored"
+499,1,Toronto,Sarnia,,"dynamic pricing, not stored"
+5,4,London,Lucan,5.00,middlesex.ca flat fare
+50,3,Detroit,London,,missing from fare_table.csv
+500,1,Sarnia,Toronto,,"dynamic pricing, not stored"
+501:15030:27335,2,North Bay,Greater Sudbury,,missing from fare_table.csv
+501:15050:27368,2,North Bay,Greater Sudbury,,missing from fare_table.csv
+501:15070:27398,2,Ottawa,Greater Sudbury,,missing from fare_table.csv
+502,1,Toronto,New York,,"dynamic pricing, not stored"
+502:15020:27328,2,Greater Sudbury,North Bay,,missing from fare_table.csv
+502:15040:27419,2,Greater Sudbury,North Bay,,missing from fare_table.csv
+502:15060:27351,2,Greater Sudbury,Ottawa,,missing from fare_table.csv
+502:15061:27420,2,Ottawa,Ottawa,,missing from fare_table.csv
+503,1,New York,Toronto,,"dynamic pricing, not stored"
+503:15010:27356,2,Greater Sudbury,Sault Ste. Marie,,missing from fare_table.csv
+504,1,Montréal,Halifax,,"dynamic pricing, not stored"
+504:15000:27346,2,Sault Ste. Marie,Greater Sudbury,,missing from fare_table.csv
+504:15000:27406,2,Sault Ste. Marie,Greater Sudbury,,missing from fare_table.csv
+505,1,Halifax,Montréal,,"dynamic pricing, not stored"
+508,1,Ottawa,Québec,,"dynamic pricing, not stored"
+51,3,London,Detroit,,missing from fare_table.csv
+510,1,Québec,Ottawa,,"dynamic pricing, not stored"
+511,1,Montréal,Ottawa,,"dynamic pricing, not stored"
+512,1,Québec,Ottawa,,"dynamic pricing, not stored"
+513,1,Québec,Ottawa,,"dynamic pricing, not stored"
+516,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+517,1,Toronto,Windsor,,"dynamic pricing, not stored"
+518,1,London,Toronto,,"dynamic pricing, not stored"
+519,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+52,3,Detroit,London,,missing from fare_table.csv
+520,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+525,1,Winnipeg,Churchill,,"dynamic pricing, not stored"
+526,1,Churchill,Winnipeg,,"dynamic pricing, not stored"
+53,3,London,Detroit,,missing from fare_table.csv
+533,1,Municipality of Jasper,Prince Rupert,,"dynamic pricing, not stored"
+534,1,Prince Rupert,Municipality of Jasper,,"dynamic pricing, not stored"
+535,1,Montréal,Saguenay,,"dynamic pricing, not stored"
+536,1,Montréal,Senneterre (ville),,"dynamic pricing, not stored"
+537,1,Saguenay,Montréal,,"dynamic pricing, not stored"
+538,1,Saguenay,Montréal,,"dynamic pricing, not stored"
+539,1,Ottawa,Québec,,"dynamic pricing, not stored"
+54,3,Detroit,London,,missing from fare_table.csv
+541,1,Ottawa,Québec,,"dynamic pricing, not stored"
+55,3,London,Detroit,,missing from fare_table.csv
+554,1,Dorval,Dorval,,"dynamic pricing, not stored"
+556,1,Québec,Ottawa,,"dynamic pricing, not stored"
+557,1,Montréal,Ottawa,,"dynamic pricing, not stored"
+558,1,Ottawa,Québec,,"dynamic pricing, not stored"
+559,1,Montréal,Saguenay,,"dynamic pricing, not stored"
+56,3,Detroit,London,,missing from fare_table.csv
+560,1,Montréal,Senneterre (ville),,"dynamic pricing, not stored"
+57,3,London,Toronto,139.81,fare_table.csv
+58,3,Toronto,London,90.26,already set in database
+59,3,London,Toronto,139.81,fare_table.csv
+6,4,Lucan,London,5.00,middlesex.ca flat fare
+60,3,Toronto,London,90.26,already set in database
+601:16250:27719,2,Sault Ste. Marie,Thunder Bay,,missing from fare_table.csv
+602:16240:27395,2,Thunder Bay,Sault Ste. Marie,,missing from fare_table.csv
+603:16350:29166,2,Thunder Bay,Winnipeg,,missing from fare_table.csv
+603:16370:30005,2,Thunder Bay,Winnipeg,,missing from fare_table.csv
+604:16340:29172,2,Winnipeg,Thunder Bay,,missing from fare_table.csv
+604:16360:30039,2,Winnipeg,Thunder Bay,,missing from fare_table.csv
+61,3,London,Toronto,139.81,fare_table.csv
+62,3,Toronto,London,90.26,already set in database
+63,3,London,Toronto,139.81,fare_table.csv
+64,3,Toronto,London,90.26,already set in database
+65,3,London,Toronto,139.81,fare_table.csv
+66,3,Toronto,London,90.26,already set in database
+67,3,London,Toronto,139.81,fare_table.csv
+68,3,Toronto,London,90.26,already set in database
+69,3,London,Toronto,139.81,fare_table.csv
+7,4,London,Lucan,5.00,middlesex.ca flat fare
+70,3,Toronto,London,90.26,already set in database
+71,3,London,Toronto,139.81,fare_table.csv
+72,3,Toronto,London,90.26,already set in database
+73,3,London,Toronto,139.81,fare_table.csv
+74,3,Toronto,London,90.26,already set in database
+75,3,London,Windsor,,missing from fare_table.csv
+76,3,Windsor,London,,missing from fare_table.csv
+77,3,London,Windsor,,missing from fare_table.csv
+78,3,Windsor,London,,missing from fare_table.csv
+79,3,London,Windsor,,missing from fare_table.csv
+8,4,Lucan,London,5.00,middlesex.ca flat fare
+80,3,Windsor,London,,missing from fare_table.csv
+81,3,London,Windsor,,missing from fare_table.csv
+82,3,Windsor,London,,missing from fare_table.csv
+83,3,London,Windsor,,missing from fare_table.csv
+84,3,Windsor,London,,missing from fare_table.csv
+9,4,Woodstock,London,5.00,middlesex.ca flat fare
+90:2300:29168,2,Timmins,Toronto,,missing from fare_table.csv
+90:3402:29164,2,Cochrane,Timmins,,missing from fare_table.csv
+90:91240:28928,2,North Bay,Toronto,,missing from fare_table.csv
+91,1,Toronto,Ottawa,,"dynamic pricing, not stored"
+91:2301:29169,2,Toronto,Timmins,,missing from fare_table.csv
+91:3302:29170,2,Timmins,Cochrane,,missing from fare_table.csv
+91:91230:29167,2,Toronto,North Bay,,missing from fare_table.csv
+93,1,Ottawa,Toronto,,"dynamic pricing, not stored"
+95,1,Ottawa,Québec,,"dynamic pricing, not stored"
+95:421:23238,2,Cochrane,Moosonee,,missing from fare_table.csv
+96:622:23244,2,Moosonee,Cochrane,,missing from fare_table.csv

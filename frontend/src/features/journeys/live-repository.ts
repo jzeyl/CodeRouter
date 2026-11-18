@@ -48,6 +48,10 @@ type StopRow = {
   stop_lat: number | null
   city_name: string | null
 }
+type TripPriceRow = {
+  trip_id: string
+  price: number | null
+}
 type ProviderRow = {
   id: number
   Provider_name: string | null
@@ -241,9 +245,14 @@ async function searchRawTrips(criteria: Parameters<JourneyRepository['search']>[
     .from('Providers')
     .select('id,Provider_name,link')
     .in('id', [...new Set(rows.map((row) => row.Provider))])
-  const [stopsResult, providersResult] = await Promise.all([
+  const pricesRequest = client
+    .from('trips')
+    .select('trip_id,price')
+    .in('trip_id', [...new Set(rows.map((row) => row.trip_id))])
+  const [stopsResult, providersResult, pricesResult] = await Promise.all([
     signal ? stopsRequest.abortSignal(signal) : stopsRequest,
     signal ? providersRequest.abortSignal(signal) : providersRequest,
+    signal ? pricesRequest.abortSignal(signal) : pricesRequest,
   ])
   if (stopsResult.error || providersResult.error)
     throw new Error('Live stop metadata couldn’t be loaded. Please try again shortly.')
@@ -252,6 +261,14 @@ async function searchRawTrips(criteria: Parameters<JourneyRepository['search']>[
     ((providersResult.data ?? []) as ProviderRow[]).map((provider) => [provider.id, provider]),
   )
   const stopByKey = new Map(stops.map((stop) => [`${stop.provider}:${stop.stop_id}`, stop]))
+  // Prices are optional: if they can't be loaded, journeys still show as "Fare unavailable".
+  const priceByTrip = new Map(
+    ((pricesResult.error ? [] : pricesResult.data ?? []) as TripPriceRow[]).flatMap((trip) =>
+      typeof trip.price === 'number' && Number.isFinite(trip.price) && trip.price > 0
+        ? [[String(trip.trip_id), trip.price] as const]
+        : [],
+    ),
+  )
   const grouped = new Map<string, StopTimeRow[]>()
   for (const row of rows) {
     const key = `${row.Provider}:${row.trip_id}`
@@ -310,7 +327,9 @@ async function searchRawTrips(criteria: Parameters<JourneyRepository['search']>[
           arrivalAt,
           durationMinutes: Math.round((Date.parse(arrivalAt) - Date.parse(departureAt)) / 60000),
           transfers: 0,
-          estimatedFare: null,
+          estimatedFare: priceByTrip.has(first.trip_id)
+            ? { amount: priceByTrip.get(first.trip_id)!, currency: 'CAD' }
+            : null,
           stops: journeyStops,
           providerUrl: providerUrl(provider.link),
           isSample: false,

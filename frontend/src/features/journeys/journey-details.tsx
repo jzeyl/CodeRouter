@@ -1,7 +1,15 @@
 import { ExternalLink, CircleAlert, MapPin } from 'lucide-react'
 import { DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { clockTime, duration, fareLabel, isStale, modeLabels, safeProviderUrl } from './format'
+import {
+  clockTime,
+  duration,
+  fareDisclaimer,
+  fareLabel,
+  isStale,
+  modeLabels,
+  safeProviderUrl,
+} from './format'
 import { JourneyActions } from './journey-actions'
 import type { Journey, JourneySearch } from './types'
 
@@ -61,6 +69,7 @@ export function JourneyDetails({
           <dd>
             {fareLabel(journey)}
             {journey.estimatedFare && <small> CAD / person</small>}
+            {journey.estimatedFare && <small className="fare-disclaimer">{fareDisclaimer}</small>}
           </dd>
         </div>
       </dl>

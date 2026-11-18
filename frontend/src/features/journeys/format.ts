@@ -19,16 +19,20 @@ export function dateLabel(date: string) {
     day: 'numeric',
   }).format(new Date(`${date}T12:00:00`))
 }
+/** Fares are the lowest published price we found, so they're shown as "From $X". */
 export function fareLabel(journey: Journey) {
   return journey.estimatedFare
-    ? new Intl.NumberFormat('en-CA', {
+    ? 'From ' +
+        new Intl.NumberFormat('en-CA', {
         style: 'currency',
         currency: 'CAD',
         minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      }).format(journey.estimatedFare.amount)
+          maximumFractionDigits: 2,
+        }).format(journey.estimatedFare.amount)
     : 'Fare unavailable'
 }
+export const fareDisclaimer =
+  'Lowest published fare we found, before taxes and fees. The actual price may vary by departure and date, so confirm with the provider.'
 export function isStale(journey: Journey, now: number) {
   return now - Date.parse(journey.updatedAt) > 24 * 3_600_000
 }

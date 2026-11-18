@@ -420,6 +420,10 @@
   display: block;
   color: var(--muted-foreground);
 }
+.itinerary-facts .fare-disclaimer {
+  margin-top: 4px;
+  line-height: 1.35;
+}
 .stops-heading {
   display: flex;
   justify-content: space-between;

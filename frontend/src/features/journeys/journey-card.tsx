@@ -1,6 +1,6 @@
 import { ArrowRight, BusFront, TrainFront, Users, Clock3, CircleAlert } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { clockTime, duration, fareLabel, isStale, modeLabels } from './format'
+import { clockTime, duration, fareDisclaimer, fareLabel, isStale, modeLabels } from './format'
 import type { Journey } from './types'
 
 const modeIcons = { coach: BusFront, rail: TrainFront, shuttle: Users }
@@ -57,7 +57,9 @@ export function JourneyCard({
         </div>
         <div className={`journey-fare ${!journey.estimatedFare ? 'unknown-fare' : ''}`}>
           <strong>{fareLabel(journey)}</strong>
-          <span>{journey.estimatedFare ? 'est. CAD / person' : 'Check with provider'}</span>
+          <span title={journey.estimatedFare ? fareDisclaimer : undefined}>
+            {journey.estimatedFare ? 'CAD / person · may vary' : 'Check with provider'}
+          </span>
         </div>
       </div>
       <div className="journey-card-bottom">
