@@ -1,0 +1,21 @@
+stop_id,provider_id,stop_name,city_name
+1,5,Central GRT Station,Kitchener
+2,5,GO/VIA Rail Station,Kitchener
+3,5,"Conestoga Mall, GRT #4004",Waterloo
+4,5,Farmer's Market,St. Jacobs
+5,5,Town Centre,Elmira
+6,5,Groceries & Home Baking,Dorking
+7,5,Country Sisters,Highway 86
+8,5,North Perth Public Library,Listowel
+9,5,LTI,Listowel
+10,5,No Frills,New Hamburg
+11,5,Shakespeare & District Optimist Hall,Shakespeare
+12,5,City Hall – Downie Street,Stratford
+13,5,City Hall – Wellington Street,Stratford
+14,5,Transit Terminal #8,Stratford
+15,5,University of Waterloo Campus,Stratford
+16,5,Town Hall,St. Marys
+17,5,Memorial Hospital,St. Marys
+18,5,"Masonville Place, LTC #704",London
+19,5,"Wright Business Park, Dunn & Packham Rd.",Stratford
+20,5,"Wright Business Park, 151 Wright Blvd",Stratford

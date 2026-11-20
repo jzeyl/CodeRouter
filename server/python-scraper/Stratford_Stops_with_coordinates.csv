@@ -1,0 +1,21 @@
+provider,stop_id,stop_name,stop_lon,stop_lat,wheelchair_boarding,city_name
+5,1,Central GRT Station,-80.4927815,43.451291,NULL,Kitchener
+5,2,GO/VIA Rail Station,-80.4927815,43.451291,NULL,Kitchener
+5,3,"Conestoga Mall, GRT #4004",-80.5222961,43.4652699,NULL,Waterloo
+5,4,Farmer's Market,-80.5546355,43.5329613,NULL,St. Jacobs
+5,5,Town Centre,-80.5507359,43.5893917,NULL,Elmira
+5,6,Groceries & Home Baking,-80.7546408,43.6484193,NULL,Dorking
+5,7,Country Sisters,-80.75633,43.6491377,NULL,Highway 86
+5,8,North Perth Public Library,-80.952882,43.731593,NULL,Listowel
+5,9,LTI,-80.952882,43.731593,NULL,Listowel
+5,10,No Frills,-80.7097716,43.3784216,NULL,New Hamburg
+5,11,Shakespeare & District Optimist Hall,-80.836852,43.3694408,NULL,Shakespeare
+5,12,City Hall – Downie Street,-80.9818016,43.3700899,NULL,Stratford
+5,13,City Hall – Wellington Street,-80.9818016,43.3700899,NULL,Stratford
+5,14,Transit Terminal #8,-80.9818016,43.3700899,NULL,Stratford
+5,15,University of Waterloo Campus,-80.9818016,43.3700899,NULL,Stratford
+5,16,Town Hall,-81.1408629,43.2570855,NULL,St. Marys
+5,17,Memorial Hospital,-81.1408629,43.2570855,NULL,St. Marys
+5,18,"Masonville Place, LTC #704",-81.2496068,42.9836747,NULL,London
+5,19,"Wright Business Park, Dunn & Packham Rd.",-80.9818016,43.3700899,NULL,Stratford
+5,20,"Wright Business Park, 151 Wright Blvd",-80.9818016,43.3700899,NULL,Stratford
