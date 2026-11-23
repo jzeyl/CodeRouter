@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowRight, ArrowRightLeft, CalendarDays, ChevronDown, Clock3, MapPin } from 'lucide-react'
+import { ArrowRight, ArrowRightLeft, CalendarDays, Clock3, MapPin } from 'lucide-react'
 import { useNavigate, useSearchParams } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { isLiveData } from '@/lib/data-source'
@@ -15,31 +15,42 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
 
   const [criteria, setCriteria] = useState<JourneySearch>(() => readSearch(params))
   const [error, setError] = useState('')
-  const cityOptions = [...new Set([...availableCities, criteria.origin, criteria.destination])]
+  const [invalidField, setInvalidField] = useState<keyof JourneySearch | null>(null)
+  const cityOptions = availableCities
   const update = (key: keyof JourneySearch, value: string) => {
     setCriteria((previous) => ({ ...previous, [key]: value }))
     setError('')
+    setInvalidField(null)
   }
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (
-      isLiveData &&
-      (!availableCities.includes(criteria.origin) ||
-        !availableCities.includes(criteria.destination))
-    ) {
-      setError('Choose cities with available services.')
+    const invalid = (field: keyof JourneySearch, message: string) => {
+      setError(message)
+      setInvalidField(field)
+      const input = event.currentTarget.elements.namedItem(field)
+      if (input instanceof HTMLInputElement) input.focus()
+    }
+    const origin = availableCities.find(
+      (city) => city.toLowerCase() === criteria.origin.trim().toLowerCase(),
+    )
+    const destination = availableCities.find(
+      (city) => city.toLowerCase() === criteria.destination.trim().toLowerCase(),
+    )
+    if (!origin || !destination) {
+      invalid(!origin ? 'origin' : 'destination', 'Choose a city from the suggestions.')
       return
     }
-    if (criteria.origin === criteria.destination) {
-      setError('Choose two different cities for your journey.')
+    if (origin === destination) {
+      invalid('destination', 'Choose two different cities for your journey.')
       return
     }
     if (criteria.date < localDate()) {
-      setError('Choose today or a future travel date.')
+      invalid('date', 'Choose today or a future travel date.')
       return
     }
     setError('')
-    navigate(`/search?${searchParams(criteria)}`)
+    setInvalidField(null)
+    navigate(`/search?${searchParams({ ...criteria, origin, destination })}`)
   }
   return (
     <section
@@ -60,13 +71,18 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
             <span className="select-wrap">
               <input
                 aria-label="Starting city"
+                name="origin"
+                required
+                maxLength={100}
+                autoComplete="off"
+                aria-invalid={invalidField === 'origin'}
+                aria-describedby={invalidField === 'origin' ? 'search-error' : undefined}
                 type="text"
                 value={criteria.origin}
                 onChange={(event) => update('origin', event.target.value)}
                 list="starting-city-options"
                 placeholder="Search cities"
               />
-              <ChevronDown size={15} aria-hidden="true" />
             </span>
             <datalist id="starting-city-options">
               {cityOptions.map((city) => (
@@ -85,6 +101,7 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
                 destination: previous.origin,
               }))
               setError('')
+              setInvalidField(null)
             }}
           >
             <ArrowRightLeft size={17} aria-hidden="true" />
@@ -96,13 +113,18 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
             <span className="select-wrap">
               <input
                 aria-label="Destination city"
+                name="destination"
+                required
+                maxLength={100}
+                autoComplete="off"
+                aria-invalid={invalidField === 'destination'}
+                aria-describedby={invalidField === 'destination' ? 'search-error' : undefined}
                 type="text"
                 value={criteria.destination}
                 onChange={(event) => update('destination', event.target.value)}
                 list="destination-city-options"
                 placeholder="Search cities"
               />
-              <ChevronDown size={15} aria-hidden="true" />
             </span>
             <datalist id="destination-city-options">
               {cityOptions.map((city) => (
@@ -117,6 +139,7 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
           </span>
           <input
             aria-label="Travel date"
+            name="date"
             type="date"
             min={localDate()}
             required
@@ -168,7 +191,7 @@ export function SearchForm({ compact = false }: { compact?: boolean }) {
           )}
         </p>
       )}
-      <p className="search-note">
+      <p className="search-note account-note">
         <span className="small-dot" /> No account needed. A little less between you and your next
         trip.
       </p>

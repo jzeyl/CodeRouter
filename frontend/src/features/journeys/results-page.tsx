@@ -1,5 +1,5 @@
 import { isLiveData } from '@/lib/data-source'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useSearchParams } from 'react-router'
 import {
@@ -44,7 +44,10 @@ export function ResultsPage() {
     refetchOnMount: 'always',
   })
   const journeys = query.data ?? []
-  const visible = filterJourneys(journeys, filters)
+  const visible = useMemo(
+    () => filterJourneys(journeys, filters),
+    [journeys, filters.mode, filters.budget, filters.maxDuration, filters.sort],
+  )
   const mapSelected = visible.find((x) => x.id === params.get('mapTrip')) ?? visible[0]
   const now = query.dataUpdatedAt
   const invalidSharedDate =
@@ -73,6 +76,14 @@ export function ResultsPage() {
     next.delete('trip')
     setParams(next, { replace: true, preventScrollReset: true })
   }
+  const revealSearch = () => {
+    setEditOpen(true)
+    requestAnimationFrame(() => {
+      const panel = document.getElementById('edit-search')
+      panel?.scrollIntoView({ block: 'start', behavior: 'instant' })
+      panel?.querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true })
+    })
+  }
   return (
     <main className="results-page page-width" id="main-content">
       <Link className="results-back" to={`/?${searchParams(criteria)}#plan`}>
@@ -93,7 +104,7 @@ export function ResultsPage() {
         </div>
         <Button
           variant="secondary"
-          onClick={() => setEditOpen(!editOpen)}
+          onClick={() => (editOpen ? setEditOpen(false) : revealSearch())}
           aria-expanded={editOpen}
           aria-controls="edit-search"
         >
@@ -300,7 +311,7 @@ export function ResultsPage() {
                   <ArrowRight size={15} aria-hidden="true" />
                 </Button>
               ) : (
-                <Button variant="secondary" onClick={() => setEditOpen(true)}>
+                <Button variant="secondary" onClick={revealSearch}>
                   Edit your search
                   <ArrowRight size={15} aria-hidden="true" />
                 </Button>

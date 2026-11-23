@@ -1235,6 +1235,29 @@ em {
     gap: 14px;
   }
 }
+@media (max-width: 480px) {
+  .city-fields {
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 10px;
+  }
+  .city-fields .search-field {
+    grid-column: 1;
+  }
+  .city-fields .search-field:last-child {
+    grid-row: 2;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .swap-button {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    width: 44px;
+    height: 44px;
+  }
+  .swap-button svg {
+    transform: rotate(90deg);
+  }
+}
 @media (max-width: 380px) {
   .date-field,
   .time-field {

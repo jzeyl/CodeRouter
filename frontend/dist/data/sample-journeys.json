@@ -1,0 +1,38 @@
+[
+  {
+    "id": "maple-coach",
+    "provider": "Maple Coach",
+    "mode": "coach",
+    "departure": "09:15",
+    "durationFactor": 1,
+    "fare": 48,
+    "ageHours": 2
+  },
+  {
+    "id": "northern-rail",
+    "provider": "Northern Rail",
+    "mode": "rail",
+    "departure": "10:05",
+    "durationFactor": 0.895,
+    "fare": 79,
+    "ageHours": 3
+  },
+  {
+    "id": "lakeside-coach",
+    "provider": "Lakeside Coach",
+    "mode": "coach",
+    "departure": "12:30",
+    "durationFactor": 1.158,
+    "fare": 39,
+    "ageHours": 50
+  },
+  {
+    "id": "regional-shuttle",
+    "provider": "Regional Shuttle",
+    "mode": "shuttle",
+    "departure": "15:00",
+    "durationFactor": 1.053,
+    "fare": null,
+    "ageHours": 4
+  }
+]

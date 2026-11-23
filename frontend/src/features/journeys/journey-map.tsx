@@ -53,7 +53,7 @@ export default function JourneyMap({
   const [ready, setReady] = useState(false)
   const [error, setError] = useState('')
   const [attempt, setAttempt] = useState(0)
-  const [stopIndex, setStopIndex] = useState(0)
+  const [activeStop, setActiveStop] = useState({ journeyId: selectedId, index: 0 })
   const query = useQuery({
     queryKey: ['geography'],
     enabled: journeys.some((journey) => journey.isSample),
@@ -66,6 +66,8 @@ export default function JourneyMap({
     retry: 1,
   })
   const selected = journeys.find((x) => x.id === selectedId) ?? journeys[0]
+  const stopIndex = activeStop.journeyId === selected?.id ? activeStop.index : 0
+  const selectStop = (index: number) => setActiveStop({ journeyId: selected.id, index })
   useEffect(() => {
     const observer = new MutationObserver(() =>
       setDark(document.documentElement.classList.contains('dark')),
@@ -219,7 +221,7 @@ export default function JourneyMap({
       element.className = 'map-stop-marker'
       element.textContent = `${index + 1} · ${stop.city}`
       element.setAttribute('aria-label', `Show ${stop.city} stop information`)
-      element.onclick = () => setStopIndex(index)
+      element.onclick = () => setActiveStop({ journeyId: selected.id, index })
       return [new Marker({ element, anchor: 'bottom' }).setLngLat(point).addTo(map)]
     })
     const fit = () => {
@@ -232,7 +234,6 @@ export default function JourneyMap({
     }
     fit()
     map.on('resize', fit)
-    setStopIndex(0)
     return () => {
       map.off('resize', fit)
       markers.forEach((marker) => marker.remove())
@@ -308,7 +309,7 @@ export default function JourneyMap({
             <button
               aria-pressed={i === stopIndex}
               onClick={() => {
-                setStopIndex(i)
+                selectStop(i)
                 const point = stopPoint(query.data, selected, i)
                 if (point) mapRef.current?.easeTo({ center: point, zoom: 10, duration: 0 })
               }}
